@@ -4,8 +4,9 @@
 
 <div class="">
     <div class="mb-4">
-        <a class="btn btn-outline-secondary btn-lg" href="{{route('posts')}} ">
-            <i class="bi bi-skip-backward-fill"></i>
+        <a class="btn btn-outline-secondary rounded-0" href="{{route('posts')}} ">
+            <i class="bi bi-chevron-double-left"></i>
+            Back
         </a>
     </div>
     <div class="bg-light border border-1">
