@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\PostController;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class Create extends Controller
 {
@@ -12,12 +14,21 @@ class Create extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request){
-        Post::create($request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required|max:3000',
-        ]));
+    public function store(StorePostRequest $request){
+        $post = Post::create($request->validated());
 
-        return redirect()->route('posts');
+        if(isset($request->media)){
+            foreach($request->media as $image){
+                $from = storage_path('app/public/tmp/uploads/' . $image['name']);
+                $to = storage_path('app/public/posts/media/' . $image['name']);
+    
+                File::move($from, $to);
+                $post->images()->create([
+                    'name' => $image['name'],
+                ]);
+            }
+        }
+
+        return response()->json(['status' => 'success'], 200);
     }
 }

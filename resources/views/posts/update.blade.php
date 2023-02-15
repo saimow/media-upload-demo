@@ -9,26 +9,17 @@
             Back
         </a>
     </div>
-    <div class="bg-light border border-1">
-        <form action="{{ route('posts.update', $post->id) }}" method="POST" class="p-4">
-            @method('PUT')
-            @csrf
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $post->title )}}">
-                @error('title')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div>
-            <div class="mb-4">
-                <label class="form-label">Content</label>
-                <textarea name="content" cols="30" rows="10" class="form-control @error('content') is-invalid @enderror" id='content'>{{ old('content', $post->content) }}</textarea>
-                @error('content')
-                    <p class="text-danger">{{ $message }}</p>
-                @enderror
-            </div>
-            <button class="btn btn-primary">update</button>
-        </form>
+    <div class="mb-3">
+        <h2>Update Post</h2>
+    </div>
+    <div class="bg-light border border-1 p-4">
+        <div id="app">
+            <update-post
+                id = '{{ $id }}'
+                index-route="{{route('posts')}}"
+            ></update-post>
+        </div>
     </div>
 </div>
+
 @endsection
